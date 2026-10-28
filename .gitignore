@@ -1,5 +1,11 @@
-node_modules/
-.slidev/
-dist/
-*.log
+node_modules
 .DS_Store
+dist
+*.local
+index.html
+.remote-assets
+components.d.ts
+slides-export*.pdf
+slides-export*.pptx
+*.log
+.slidev/

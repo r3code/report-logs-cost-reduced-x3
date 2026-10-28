@@ -1,0 +1,67 @@
+name: Deploy slides to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skip queued runs.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          version: 8.15.6
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate version string
+        # Формат: YYYYMMDD r<short-sha>
+        # Подставляется в slides.md и slides/*.md вместо плейсхолдера __VERSION__
+        run: |
+          VERSION="$(date -u +%Y%m%d) rev. $(echo ${{ github.sha }} | cut -c1-7)"
+          echo "Version: $VERSION"
+          sed -i "s/__VERSION__/$VERSION/g" slides.md slides/*.md
+          grep -rq "$VERSION" slides/ && echo "Version injected OK"
+
+      - name: Build slides
+        # --base нужен, потому что GitHub Pages проектного репозитория
+        # живёт по пути /report-logs-cost-reduced-x3/, а не в корне /
+        run: pnpm run build:pages
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,39 @@
+name: Lint slides
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'slides.md'
+      - 'slides/**'
+      - 'scripts/lint-slides.mjs'
+      - '.github/workflows/lint.yml'
+  pull_request:
+    paths:
+      - 'slides.md'
+      - 'slides/**'
+      - 'scripts/lint-slides.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          version: 8.15.6
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Lint slides.md and slides/
+        run: node scripts/lint-slides.mjs

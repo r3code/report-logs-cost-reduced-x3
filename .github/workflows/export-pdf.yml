@@ -1,0 +1,54 @@
+name: Export PDF
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          version: 8.15.6
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate version string
+        run: |
+          VERSION="$(date -u +%Y%m%d) rev. $(echo ${{ github.sha }} | cut -c1-7)"
+          echo "Version: $VERSION"
+          sed -i "s/__VERSION__/$VERSION/g" slides.md slides/*.md
+          grep -rq "$VERSION" slides/ && echo "Version injected OK"
+
+      - name: Install Chromium for Playwright
+        # --with-deps ставит системные библиотеки (libnss3, libatk и т.д.)
+        # без --with-deps chromium запустится но упадёт с ошибкой
+        run: npx playwright install --with-deps chromium
+
+      - name: Export slides to PDF
+        # --with-clicks — экспортирует все шаги v-click как отдельные страницы
+        # --timeout 120000 — 2 минуты на рендеринг (для сложных слайдов с картинками)
+        # --wait-until networkidle — ждать пока загрузятся все картинки (иначе PDF может выйти без них)
+        # --wait 1500 — дополнительная пауза 1.5с после networkidle для надёжности
+        run: pnpm exec slidev export --format pdf --with-clicks --wait-until networkidle --wait 1500 --output "Логи-в-4.5-раза-дешевле-ClickHouse-Vector.pdf" --timeout 120000
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: slides-pdf
+          path: "*.pdf"
+          if-no-files-found: error
+          retention-days: 30

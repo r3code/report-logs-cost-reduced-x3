@@ -1,0 +1,121 @@
+name: Export PPTX (images)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export-pptx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          version: 8.15.6
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Node dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate version string
+        run: |
+          VERSION="$(date -u +%Y%m%d) rev. $(echo ${{ github.sha }} | cut -c1-7)"
+          echo "Version: $VERSION"
+          sed -i "s/__VERSION__/$VERSION/g" slides.md slides/*.md
+          grep -rq "$VERSION" slides/ && echo "Version injected OK"
+
+      - name: Install Chromium for Playwright
+        # --with-deps ставит системные библиотеки (libnss3, libatk и т.д.)
+        # без --with-deps chromium запустится но упадёт с ошибкой
+        run: npx playwright install --with-deps chromium
+
+      - name: Install python-pptx
+        run: pip install --no-cache-dir python-pptx
+
+      - name: Export slides to PNG (per-slide)
+        # --per-slide создаёт директорию slide/ с файлами 01.png, 02.png, ...
+        # --output "slides-png/export" → slides-png/export/01.png, 02.png, ...
+        # --wait-until networkidle — ждать пока загрузятся все картинки (иначе PNG может выйти без них)
+        # --wait 1500 — дополнительная пауза 1.5с после networkidle для надёжности
+        run: |
+          mkdir -p slides-png
+          pnpm exec slidev export --format png --per-slide --wait-until networkidle --wait 1500 --output "slides-png/export" --timeout 120000
+
+      - name: List exported PNGs
+        run: ls -la slides-png/export/
+
+      - name: Build PPTX from PNGs
+        run: |
+          python3 <<'PYEOF'
+          import os
+          import glob
+          from pptx import Presentation
+          from pptx.util import Inches
+
+          # 16:9 стандартный размер слайда PowerPoint
+          prs = Presentation()
+          prs.slide_width = Inches(13.333)
+          prs.slide_height = Inches(7.5)
+
+          # Slidev создаёт файлы 01.png, 02.png, ..., 10.png, 11.png
+          # Естественная сортировка для правильного порядка
+          def natural_key(name):
+              import re
+              return [int(t) if t.isdigit() else t for t in re.split(r'(\d+)', name)]
+
+          pngs = sorted(glob.glob('slides-png/export/*.png'), key=natural_key)
+          print(f"Найдено PNG: {len(pngs)}")
+          for p in pngs:
+              print(f"  - {p}")
+
+          if not pngs:
+              raise SystemExit("PNG не найдены - экспорт не удался")
+
+          blank_layout = prs.slide_layouts[6]  # 6 = Blank
+
+          for png in pngs:
+              slide = prs.slides.add_slide(blank_layout)
+              slide.shapes.add_picture(
+                  png,
+                  left=0,
+                  top=0,
+                  width=prs.slide_width,
+                  height=prs.slide_height,
+              )
+
+          out = "Логи-в-4.5-раза-дешевле-ClickHouse-Vector.pptx"
+          prs.save(out)
+          print(f"Создан: {out}")
+          print(f"Размер: {os.path.getsize(out)} байт")
+          print(f"Слайдов в PPTX: {len(prs.slides)}")
+          PYEOF
+
+      - name: Upload PPTX artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: slides-pptx
+          path: "*.pptx"
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload PNG artifact (опционально)
+        uses: actions/upload-artifact@v6
+        with:
+          name: slides-png
+          path: slides-png/export/*.png
+          if-no-files-found: error
+          retention-days: 14
