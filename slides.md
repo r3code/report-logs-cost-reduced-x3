@@ -1,5 +1,5 @@
 ---
-theme: r3code
+theme: r3code-tech
 title: 'Как мы сократили стоимость хранения логов в 4.5 раза с ClickHouse и Vector'
 info: |
   Переход с EFK на ClickHouse + Vector.
@@ -12,8 +12,8 @@ drawings:
 transition: slide-left
 mdc: true
 fonts:
-  sans: 'Noto Sans SC'
-  mono: 'JetBrains Mono'
+  sans: 'Noto Sans'
+  mono: 'Fira Code'
 ---
 
 ---

@@ -13,9 +13,13 @@ layout: two-cols
 
 <div class="pl-4">
 
-![График роста затрат и падения retention](./assets/02-cost-growth.png)
+<div class="bg-gray-200 border-2 border-dashed border-gray-400 h-80 flex items-center justify-center text-center p-4 rounded">
+  <span><b>Плейсхолдер</b><br/>График роста затрат 180к→810к<br/>+ линия падения retention до 5ч</span>
+</div>
 
 <!-- ЗАМЕНИТЬ НА ГРАФИК: столбчатая диаграмма роста затрат 180к→810к + линия падения retention до 5ч -->
+<!-- После создания файла положить в assets/02-cost-growth.png и заменить блок выше на: -->
+<!-- ![График роста затрат и падения retention](./assets/02-cost-growth.png) -->
 
 </div>
 

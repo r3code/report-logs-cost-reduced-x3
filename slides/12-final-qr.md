@@ -9,9 +9,13 @@ class: text-center
 
 <div>
 
-![QR-код на Starter Pack](./assets/12-qr-code.png)
+<div class="bg-gray-200 border-2 border-dashed border-gray-400 w-64 h-64 flex items-center justify-center text-center p-4 rounded mx-auto">
+  <span><b>QR-код</b><br/>Starter Pack</span>
+</div>
 
 <!-- ЗАМЕНИТЬ НА QR-КОД: ссылка на GitHub/Notion Starter Pack -->
+<!-- После создания файла положить в assets/12-qr-code.png и заменить блок выше на: -->
+<!-- ![QR-код на Starter Pack](./assets/12-qr-code.png) -->
 
 <div class="text-xs opacity-60 mt-2">
 

@@ -20,8 +20,12 @@ Kafka защищает от пиков · ClickHouse — тяжёлые запр
 
 ::right::
 
-![Схема архитектуры ULP](./assets/04-architecture.png)
+<div class="bg-gray-200 border-2 border-dashed border-gray-400 h-80 flex items-center justify-center text-center p-4 rounded">
+  <span><b>Плейсхолдер</b><br/>Схема архитектуры ULP<br/>Vector → Kafka → Aggregator → CH+VM, 3 ЦОД</span>
+</div>
 
 <!-- ЗАМЕНИТЬ НА СХЕМУ: Vector Agent → Kafka (буфер) → Vector Aggregator → ClickHouse + VictoriaMetrics, распределённая архитектура в 3 ЦОД -->
+<!-- После создания файла положить в assets/04-architecture.png и заменить блок выше на: -->
+<!-- ![Схема архитектуры ULP](./assets/04-architecture.png) -->
 
 <!-- Примечание спикера: Наша архитектура — Universal Logging Platform, ULP. На каждой ноде стоит Vector Agent: читает лог-файлы, парсит, отправляет в Kafka. Kafka — наш буфер, защищает от пиков и рассинхрона между сбором и записью. Vector Aggregator забирает из Kafka, трансформирует, пишет в ClickHouse для тяжёлых запросов и VictoriaMetrics для метрик. Архитектура распределённая в трёх ЦОД — если один дата-центр падает, логи не теряются. Доставка — 99.98–100%, это мониторится. Архитектура простая, но каждый компонент решает конкретную проблему. -->
