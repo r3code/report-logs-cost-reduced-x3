@@ -2,7 +2,6 @@
   "name": "report-logs-cost-reduced-x3",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@8.15.6",
   "scripts": {
     "build": "slidev build",
     "build:pages": "slidev build --base /report-logs-cost-reduced-x3/ --without-notes",
