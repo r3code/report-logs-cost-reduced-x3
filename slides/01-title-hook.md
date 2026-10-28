@@ -8,7 +8,7 @@ layout: cover
 
 <div class="pt-8">
   <span class="px-2 py-1 rounded cursor-pointer text-sm" hover="bg-white bg-opacity-10">
-    **Ваше Имя** · Vi.Tech
+    **Дмитрий Синявский** · SRE
   </span>
 </div>
 

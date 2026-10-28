@@ -2,8 +2,8 @@
 theme: r3code
 title: 'Как мы сократили стоимость хранения логов в 4.5 раза с ClickHouse и Vector'
 info: |
-  Vi.Tech — переход с EFK на ClickHouse + Vector.
-  3.8 ТБ/день, 200+ сервисов, 800+ нод.
+  Переход с EFK на ClickHouse + Vector.
+  3.8 ТБ/день, 200+ сервисов, 4 кластера K8s (800+ нод).
 class: text-center
 highlighter: shiki
 lineNumbers: false
