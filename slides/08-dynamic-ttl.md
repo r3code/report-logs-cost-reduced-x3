@@ -6,10 +6,10 @@ clicks: 4
 # Кейс 3: Динамический TTL
 
 <ul class="progressive">
-  <li v-show="$clicks >= 0" :class="{ active: $clicks === 0 }">Каждой записи — свой срок через LogTTL UInt16</li>
-  <li v-show="$clicks >= 1" :class="{ active: $clicks === 1 }">Сервис сам указывает TTL в часах при записи</li>
-  <li v-show="$clicks >= 2" :class="{ active: $clicks === 2 }">Критичный нюанс: ttl_only_drop_parts = 0</li>
-  <li v-show="$clicks >= 3" :class="{ active: $clicks === 3 }">Иначе партиция живёт по самому длинному TTL</li>
+  <li v-show="$clicks > 0" :class="{ active: $clicks === 1 }">Каждой записи — свой срок через LogTTL UInt16</li>
+  <li v-show="$clicks > 1" :class="{ active: $clicks === 2 }">Сервис сам указывает TTL в часах при записи</li>
+  <li v-show="$clicks > 2" :class="{ active: $clicks === 3 }">Критичный нюанс: ttl_only_drop_parts = 0</li>
+  <li v-show="$clicks > 3" :class="{ active: $clicks === 4 }">Иначе партиция живёт по самому длинному TTL</li>
 </ul>
 
 ::right::

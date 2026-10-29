@@ -6,10 +6,10 @@ clicks: 4
 # Побочный эффект: генерация метрик
 
 <ul class="progressive">
-  <li v-show="$clicks >= 0" :class="{ active: $clicks === 0 }">Раньше: копипаст VRL-кода для метрик каждого сервиса</li>
-  <li v-show="$clicks >= 1" :class="{ active: $clicks === 1 }">Теперь: единый metrics-catalog.yml → Ansible/Jinja</li>
-  <li v-show="$clicks >= 2" :class="{ active: $clicks === 2 }">Время на добавление метрики: 5 часов → 20 минут</li>
-  <li v-show="$clicks >= 3" :class="{ active: $clicks === 3 }">Единый источник истины, ноль рассинхрона</li>
+  <li v-show="$clicks > 0" :class="{ active: $clicks === 1 }">Раньше: копипаст VRL-кода для метрик каждого сервиса</li>
+  <li v-show="$clicks > 1" :class="{ active: $clicks === 2 }">Теперь: единый metrics-catalog.yml → Ansible/Jinja</li>
+  <li v-show="$clicks > 2" :class="{ active: $clicks === 3 }">Время на добавление метрики: 5 часов → 20 минут</li>
+  <li v-show="$clicks > 3" :class="{ active: $clicks === 4 }">Единый источник истины, ноль рассинхрона</li>
 </ul>
 
 ::right::

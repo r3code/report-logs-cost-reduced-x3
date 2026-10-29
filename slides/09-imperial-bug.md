@@ -12,11 +12,11 @@ clicks: 5
 </div>
 
 <ul class="progressive">
-  <li v-show="$clicks >= 0" :class="{ active: $clicks === 0 }">Лог с датой 24-08-02 → 24 год н.э., эпоха Тиберия</li>
-  <li v-show="$clicks >= 1" :class="{ active: $clicks === 1 }">VRL to_unix_timestamp() ушёл в panic</li>
-  <li v-show="$clicks >= 2" :class="{ active: $clicks === 2 }">Конвейер встал — логи не пишутся</li>
-  <li v-show="$clicks >= 3" :class="{ active: $clicks === 3 }">Хотфикс за 40 минут + репорт в upstream</li>
-  <li v-show="$clicks >= 4" :class="{ active: $clicks === 4 }">Пофикшено в Vector v0.44</li>
+  <li v-show="$clicks > 0" :class="{ active: $clicks === 1 }">Лог с датой 24-08-02 → 24 год н.э., эпоха Тиберия</li>
+  <li v-show="$clicks > 1" :class="{ active: $clicks === 2 }">VRL to_unix_timestamp() ушёл в panic</li>
+  <li v-show="$clicks > 2" :class="{ active: $clicks === 3 }">Конвейер встал — логи не пишутся</li>
+  <li v-show="$clicks > 3" :class="{ active: $clicks === 4 }">Хотфикс за 40 минут + репорт в upstream</li>
+  <li v-show="$clicks > 4" :class="{ active: $clicks === 5 }">Пофикшено в Vector v0.44</li>
 </ul>
 
 <div class="mt-6 text-sm italic opacity-80">

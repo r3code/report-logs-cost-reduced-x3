@@ -6,10 +6,10 @@ clicks: 4
 # Фундамент для AI и автоматизации
 
 <ul class="progressive">
-  <li v-show="$clicks >= 0" :class="{ active: $clicks === 0 }">Переход от хаоса к строгой схеме OTel Logs Data Model</li>
-  <li v-show="$clicks >= 1" :class="{ active: $clicks === 1 }">Структурированные данные в ClickStack — Attributes, Resource</li>
-  <li v-show="$clicks >= 2" :class="{ active: $clicks === 2 }">AI-ассистенты через MCP делают точные SQL-запросы</li>
-  <li v-show="$clicks >= 3" :class="{ active: $clicks === 3 }">Поиск и анализ логов ускоряется в разы, без галлюцинаций</li>
+  <li v-show="$clicks > 0" :class="{ active: $clicks === 1 }">Переход от хаоса к строгой схеме OTel Logs Data Model</li>
+  <li v-show="$clicks > 1" :class="{ active: $clicks === 2 }">Структурированные данные в ClickStack — Attributes, Resource</li>
+  <li v-show="$clicks > 2" :class="{ active: $clicks === 3 }">AI-ассистенты через MCP делают точные SQL-запросы</li>
+  <li v-show="$clicks > 3" :class="{ active: $clicks === 4 }">Поиск и анализ логов ускоряется в разы, без галлюцинаций</li>
 </ul>
 
 <div class="mt-4">
