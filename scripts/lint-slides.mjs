@@ -135,17 +135,18 @@ for (const { path: filePath, rel } of filesToLint) {
   })
 
   // ─── 4. Проверка speaker notes (для файлов слайдов) ─────────────────
-  if (rel.startsWith('slides/')) {
-    if (!src.includes('Примечание спикера')) {
-      warnings.push('  △ Не найден блок "Примечание спикера" (рекомендуется для каждого слайда)')
-    }
+  // Speaker notes — это HTML-комментарии <!-- ... -->, как в эталоне.
+  // В файлах slides/*.md они должны быть. В slides.md (cover inline) — тоже.
+  if (!src.includes('<!--')) {
+    warnings.push('  △ Не найден HTML-комментарий (speaker notes рекомендуется для каждого слайда)')
   }
 
-  // ─── 5. Запрет text-gray-* ──────────────────────────────────────────
+  // ─── 5. Запрет text-gray-* (цвет текста) ─────────────────────────────
+  // bg-gray-* и border-gray-* РАЗРЕШЕНЫ — тема использует их для плейсхолдеров
   textLines.forEach(({ line, text }) => {
     const grayMatch = text.match(/text-gray-(?:50|100|200|300|400|500|600|700|800|900)/g)
     if (grayMatch) {
-      addError(line, `Запрещён серый цвет: ${grayMatch.join(', ')}`)
+      addError(line, `Запрещён серый цвет текста: ${grayMatch.join(', ')} — используйте text-black`)
     }
   })
 
