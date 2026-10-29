@@ -1,16 +1,10 @@
 ---
 layout: two-column
-clicks: 4
 ---
 
 # Кейс 1: Стена аннотаций K8s
 
-<ul class="progressive">
-  <li v-show="$clicks > 0" :class="{ active: $clicks === 1 }">Лимит 63 символа на ключ аннотации K8s</li>
-  <li v-show="$clicks > 1" :class="{ active: $clicks === 2 }">Имена меток сервисов не влезали</li>
-  <li v-show="$clicks > 2" :class="{ active: $clicks === 3 }">Выборочный сбор ломался</li>
-  <li v-show="$clicks > 3" :class="{ active: $clicks === 4 }">Решение: сбор всего + исключение по namespace label</li>
-</ul>
+<ProgressiveList :items="['Лимит 63 символа на ключ аннотации K8s', 'Имена меток сервисов не влезали', 'Выборочный сбор ломался', 'Решение: сбор всего + исключение по namespace label']" />
 
 ::right::
 

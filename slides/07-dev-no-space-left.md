@@ -1,16 +1,10 @@
 ---
 layout: two-column
-clicks: 4
 ---
 
 # Кейс 2: Dev-контур и No space left
 
-<ul class="progressive">
-  <li v-show="$clicks > 0" :class="{ active: $clicks === 1 }">Vector держал fd удалённых (rotated) логов</li>
-  <li v-show="$clicks > 1" :class="{ active: $clicks === 2 }">Диск забивался, новые логи не писались</li>
-  <li v-show="$clicks > 2" :class="{ active: $clicks === 3 }">Корень: oldest_first: true залипал на старых</li>
-  <li v-show="$clicks > 3" :class="{ active: $clicks === 4 }">Фикс — две строки конфига</li>
-</ul>
+<ProgressiveList :items="['Vector держал fd удалённых (rotated) логов', 'Диск забивался, новые логи не писались', 'Корень: oldest_first: true залипал на старых', 'Фикс — две строки конфига']" />
 
 ::right::
 

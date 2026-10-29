@@ -1,19 +1,12 @@
 ---
 layout: two-column
-clicks: 5
 ---
 
 # Архитектура ULP
 
 Universal Logging Platform
 
-<ul class="progressive">
-  <li v-show="$clicks > 0" :class="{ active: $clicks === 1 }">Vector Agent на каждой ноде — сбор</li>
-  <li v-show="$clicks > 1" :class="{ active: $clicks === 2 }">Kafka — буфер между сбором и агрегацией</li>
-  <li v-show="$clicks > 2" :class="{ active: $clicks === 3 }">Vector Aggregator → ClickHouse + VictoriaMetrics</li>
-  <li v-show="$clicks > 3" :class="{ active: $clicks === 4 }">Распределённая архитектура в 3 ЦОД</li>
-  <li v-show="$clicks > 4" :class="{ active: $clicks === 5 }">Доставка логов: 99.98–100%</li>
-</ul>
+<ProgressiveList :items="['Vector Agent на каждой ноде — сбор', 'Kafka — буфер между сбором и агрегацией', 'Vector Aggregator → ClickHouse + VictoriaMetrics', 'Распределённая архитектура в 3 ЦОД', 'Доставка логов: 99.98–100%']" />
 
 ::right::
 

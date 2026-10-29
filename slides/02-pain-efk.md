@@ -1,16 +1,10 @@
 ---
 layout: two-column
-clicks: 4
 ---
 
 # Боль: EFK не справлялся
 
-<ul class="progressive">
-  <li v-show="$clicks > 0" :class="{ active: $clicks === 1 }">Затраты: 180к → 810к руб./мес за 2 года</li>
-  <li v-show="$clicks > 1" :class="{ active: $clicks === 2 }">Время хранения логов упало до 5 часов</li>
-  <li v-show="$clicks > 2" :class="{ active: $clicks === 3 }">18 нод Elastic, FluentD терял логи</li>
-  <li v-show="$clicks > 3" :class="{ active: $clicks === 4 }">Платили премиум за инфру, которая не работала</li>
-</ul>
+<ProgressiveList :items="['Затраты: 180к → 810к руб./мес за 2 года', 'Время хранения логов упало до 5 часов', '18 нод Elastic, FluentD терял логи', 'Платили премиум за инфру, которая не работала']" />
 
 ::right::
 
