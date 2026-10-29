@@ -38,12 +38,12 @@ jobs:
 
       - name: Generate version string
         # Формат: YYYYMMDD r<short-sha>
-        # Подставляется в slides.md и slides/*.md вместо плейсхолдера __VERSION__
+        # Подставляется в slides.md (cover inline) вместо плейсхолдера __VERSION__
         run: |
           VERSION="$(date -u +%Y%m%d) rev. $(echo ${{ github.sha }} | cut -c1-7)"
           echo "Version: $VERSION"
           sed -i "s/__VERSION__/$VERSION/g" slides.md slides/*.md
-          grep -rq "$VERSION" slides/ && echo "Version injected OK"
+          grep -rq "$VERSION" slides.md slides/ && echo "Version injected OK"
 
       - name: Build slides
         # --base нужен, потому что GitHub Pages проектного репозитория

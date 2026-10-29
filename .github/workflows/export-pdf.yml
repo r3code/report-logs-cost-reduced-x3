@@ -31,7 +31,7 @@ jobs:
           VERSION="$(date -u +%Y%m%d) rev. $(echo ${{ github.sha }} | cut -c1-7)"
           echo "Version: $VERSION"
           sed -i "s/__VERSION__/$VERSION/g" slides.md slides/*.md
-          grep -rq "$VERSION" slides/ && echo "Version injected OK"
+          grep -rq "$VERSION" slides.md slides/ && echo "Version injected OK"
 
       - name: Install Chromium for Playwright
         # --with-deps ставит системные библиотеки (libnss3, libatk и т.д.)
