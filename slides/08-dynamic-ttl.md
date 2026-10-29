@@ -1,5 +1,6 @@
 ---
 layout: two-column
+clicks: 4
 ---
 
 # Кейс 3: Динамический TTL

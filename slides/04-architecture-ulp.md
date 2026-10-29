@@ -1,5 +1,6 @@
 ---
 layout: two-column
+clicks: 5
 ---
 
 # Архитектура ULP

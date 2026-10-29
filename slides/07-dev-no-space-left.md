@@ -1,5 +1,6 @@
 ---
 layout: two-column
+clicks: 4
 ---
 
 # Кейс 2: Dev-контур и No space left

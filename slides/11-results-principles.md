@@ -1,5 +1,6 @@
 ---
 layout: default
+clicks: 3
 ---
 
 # Итоги: 3 принципа
